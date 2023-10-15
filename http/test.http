@@ -1,0 +1,5 @@
+//intellij community version doesn't support test.http
+//so here I use Postman to test api
+GET http://localhost:8880/hello
+Accept: application/json
+###
