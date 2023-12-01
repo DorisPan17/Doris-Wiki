@@ -5,6 +5,7 @@ import com.doris.wiki.domain.EbookExample;
 import com.doris.wiki.mapper.EbookMapper;
 import com.doris.wiki.req.EbookReq;
 import com.doris.wiki.resp.EbookResp;
+import com.doris.wiki.resp.PageResp;
 import com.doris.wiki.util.CopyUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,14 +27,14 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<EbookResp> list(EbookReq req) {
+    public PageResp<EbookResp> list(EbookReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())) {
             criteria.andNameLike("%" + req.getName() + "%");
         }
 
-        PageHelper.startPage(1, 3);
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
@@ -52,6 +53,9 @@ public class EbookService {
         //列表复制
         List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
 
-        return list;
+        PageResp<EbookResp> pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(list);
+        return pageResp;
     }
 }

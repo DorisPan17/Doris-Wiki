@@ -4,6 +4,7 @@ import com.doris.wiki.domain.Ebook;
 import com.doris.wiki.req.EbookReq;
 import com.doris.wiki.resp.CommonResp;
 import com.doris.wiki.resp.EbookResp;
+import com.doris.wiki.resp.PageResp;
 import com.doris.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class EbookController {
     private EbookService ebookService;
     @GetMapping("/list")
     public CommonResp list(EbookReq req) {
-        CommonResp<List<EbookResp>> resp = new CommonResp<>();
-        List<EbookResp> list = ebookService.list(req);
+        CommonResp<PageResp<EbookResp>> resp = new CommonResp<>();
+        PageResp<EbookResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
