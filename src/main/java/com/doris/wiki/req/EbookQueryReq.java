@@ -1,7 +1,7 @@
 package com.doris.wiki.req;
 
 /*EbookReq是PageReq的上级*/
-public class EbookReq extends PageReq{
+public class EbookQueryReq extends PageReq{
     private Long id;
 
     private String name;
